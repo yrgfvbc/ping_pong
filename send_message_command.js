@@ -1,5 +1,6 @@
 let amqp = require("amqplib/callback_api");
 
+//Function for publishing the command to the exchange
 let publish_command = function(msg, channel, exchange,sender_server, dest_server){
     channel.publish(exchange, sender_server, Buffer.from(msg),{
         replyTo:dest_server,
@@ -8,6 +9,7 @@ let publish_command = function(msg, channel, exchange,sender_server, dest_server
     console.log(" Told %s to send %s to %s",sender_server,msg,dest_server);
 };
 
+//Function for commanding one server to send a message to a different server
 let send_message_command = function(rmq_url, exchange_name,sender_server,msg,dest_server) {
     amqp.connect(rmq_url, function (error0, connection) {
         if (error0) {
